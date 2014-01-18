@@ -1,0 +1,19 @@
+<div id="content">
+  <div id="siteNotice"></div>
+  <h4 id="firstHeading" class="firstHeading"><%= school.name %></h4>
+  <div id="bodyContent">
+	<p><b>Address:</b> <%= school.full_address %></p>
+	<p><b>Distance:</b> <%= distance %> mi</p>
+	<p><b>Enrollment:</b> <%= school.number_of_students %></p>
+	<p><b>Phone:</b> <%= school.phone %></p>
+	<p><b>Type:</b> <%= School::SCHOOL_TYPE[school.school_type] %></p>
+	<p><b>Level:</b> <%= School::SCHOOL_LEVEL[school.school_level] %></p>
+	<p><b>Grades:</b> 
+		<% if ['UG', 'N'].include?(school.low_grade_offered) %>
+		  <%= School::SCHOOL_GRADE[school.low_grade_offered] %>
+		<% else %>
+		From <%= School::SCHOOL_GRADE[school.low_grade_offered] %> to <%= School::SCHOOL_GRADE[school.high_grade_offered] %></p>
+		<% end %>
+	<p><b>Status:</b> <%= School::SCHOOL_STATUS[school.school_status] %></p>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+<div class="alert alert-<%= schools.empty? ? 'warning' : 'success' %> alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong><%= schools.empty? ? 'Sorry' : 'Yay' %>!</strong> There are at least <%= schools.size %> schools within 15 miles.
+</div>

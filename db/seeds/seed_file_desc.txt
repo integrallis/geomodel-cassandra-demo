@@ -1,0 +1,119 @@
+ncessch:    NCESSCH       2      AN     Unique NCES public school ID (7-digit NCES agency ID (LEAID) + 5-digit NCES school ID (SCHNO).
+schnam09:   SCHNAM        9      AN     Name of the school.
+mstree09:   MSTREE        11     AN     The mailing address of the school— may be a street address, a P.O. Box number, or, if verified that there is no  
+                              address beyond CITY, STATE, and ZIP, the character “N.”  
+mcity09,    MCITY         12     AN     School mailing address city.
+mstate09,   MSTATE        13     AN     Two-letter U.S. Postal Service abbreviation of the state where the mailing address is located (see FIPS state  
+                              codes and abbreviations used in CCD dataset).
+mzip09,     MZIP          14     AN     Five-digit U.S. Postal Service ZIP code for the mailing address.
+mzip409,    MZIP4         15     AN     Four-digit (ZIP+4) code for the mailing address. If the mailing address has been assigned the additional  
+                              four-digit +4 ZIP, this field contains that number; otherwise, this field is blank.
+member09,   MEMBER	      300    N	    Total students, all grades:  The reported total membership of the school.
+phone09,    PHONE         10     AN     Telephone number of school.
+ulocal09,   ULOCAL        24     AN     NCES urban-centric locale code.  
+
+			    NOTE: Starting in 2006–07, CCD data files contain a new locale code system that is based on the urbanicity 
+                              of the school location.  Prior to 2006–07, the locale code was assigned based on a school’s metro status.  
+                              See appendix C, Glossary, for more detail. 
+
+			    11 = City, Large: Territory inside an urbanized area and inside a principal city with population of 250,000 
+                                 or more.
+
+			    12 = City, Mid-size: Territory inside an urbanized area and inside a principal city with a population less 
+                                 than 250,000 and greater than or equal to 100,000.
+
+			    13 = City, Small: Territory inside an urbanized area and inside a principal city with a population less 
+                                 than 100,000.
+
+			    21 = Suburb, Large: Territory outside a principal city and inside an urbanized area with population of 
+                                 250,000 or more.
+
+			    22 = Suburb, Mid-size: Territory outside a principal city and inside an urbanized area with a population 
+                                 less than 250,000 and greater than or equal to 100,000.
+
+			    23 = Suburb, Small: Territory outside a principal city and inside an urbanized area with a population less 
+                                 than 100,000.
+
+			    31 = Town, Fringe: Territory inside an urban cluster that is less than or equal to 10 miles from an urbanized 
+                                 area.
+
+			    32 = Town, Distant: Territory inside an urban cluster that is more than 10 miles and less than or equal to 35 
+                                 miles from an urbanized area.
+
+			    33 = Town, Remote: Territory inside an urban cluster that is more than 35 miles from an urbanized area.
+
+			    41 = Rural, Fringe: Census-defined rural territory that is less than or equal to 5 miles from an urbanized 
+                                 area, as well as rural territory that is less than or equal to 2.5 miles from an urban cluster.
+
+			    42 = Rural, Distant: Census-defined rural territory that is more than 5 miles but less than or equal to 25 
+                                 miles from an urbanized area, as well as rural territory that is more than 2.5 miles but less than or 
+                                 equal to 10 miles from an urban cluster.
+
+ 			    43 = Rural, Remote: Census-defined rural territory that is more than 25 miles from an urbanized area                       
+          		         and is also more than 10 miles from an urban cluster.
+type09,     TYPE          21     AN     NCES code for type of school:
+
+                                         1 = Regular school
+
+                                         2 = Special education school
+
+                                         3 = Vocational school
+
+                                         4 = Other/alternative school
+
+                                         5 = Reportable program
+level09,    LEVEL	      64     AN	    School level.  The following codes were calculated from the school’s corresponding GSLO and GSHI values: 
+
+                                        1 = Primary (low grade = PK through 03; high grade = PK through 08)
+
+                         			    2 = Middle (low grade = 04 through 07; high grade = 04 through 09)
+
+                         			    3 = High (low grade = 07 through 12; high grade = 12 only)
+
+                         			    4 = Other (any other configuration not falling within the above three categories, including ungraded)
+gslo09,     GSLO          47     AN	    School low grade offered. The following codes are used:
+
+                        			    UG = Ungraded
+
+                        			    PK = Prekindergarten
+
+                        			    KG = Kindergarten
+
+                        			    01–12 = 1st through 12th grade
+
+                        			    N = School had no students reported
+
+                        			    UG and N each occur only in isolation from other codes.  When one of these does occur, it is both the 
+                                                      lowest (GSLO) and the highest (GSHI) grade.
+gshi09,     GSHI          48    AN	    School high grade offered.  The following codes are used:
+
+                          			    UG = Ungraded
+
+                          			    PK = Prekindergarten
+
+                          			    KG = Kindergarten
+
+                          			    01–12 = 1st through 12th grade
+
+                          			    N = School had no students reported
+
+                          			    UG and N each occur only in isolation from other codes.  When one of these does occur, it is both the 
+                                                        lowest (GSLO) and the highest (GSHI) grade.
+status09    STATUS        22     AN     NCES code for the school status:
+
+                                        1 = School was operational at the time of the last report and is currently operational.
+
+                                        2 = School has closed since the time of the last report.
+
+                                        3 = School has been opened since the time of the last report.
+
+                                        4 = School was operational at the time of the last report but was not on the CCD list at that time.
+
+                                        5 = School was listed in previous year’s CCD school universe as being affiliated with a different  
+                                            education agency.
+
+                                        6 = School is temporarily closed and may reopen within 3 years.
+
+                                        7 = School is scheduled to be operational within 2 years.
+
+                                        8 = School was closed on previous year’s file but has reopened.

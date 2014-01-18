@@ -1,0 +1,32 @@
+@import "mixins";
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+#map img { 
+  max-width: none;
+}
+
+#map label { 
+  width: auto; display:inline; 
+}
+
+#alerts {
+  padding-top: 10px;  
+}
+
+/** FOOTER **/
+#footer {
+  text-align: center;
+  ul {
+    margin-bottom: 0;
+    li {
+      padding: 0 5px;
+      a {
+        color: darken($white, 73.5%);
+      }
+    }
+  }
+}
