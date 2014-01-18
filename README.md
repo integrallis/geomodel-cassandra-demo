@@ -89,10 +89,26 @@ of the clicked location
 
 ## Configuration
 
+Install link:http://git-scm.com/[Git],  link:https://rvm.io/[RVM], link:http://www.postgresql.org/[PostgreSQL] and link:http://cassandra.apache.org/[Cassandra]
+
+
+```shell
+$ rvm get head
+$ git clone https://github.com/BaseboxSoftware/specx.git
+$ cd specx/ # prompted by RVM
+$ bundle
+$ rake db:migrate db:test:prepare
+$ rake cassandra:setup cassandra:migrate cassandra:test:prepare
+$ rspec spec
+$ foreman start
+```
+
 Add a .env (https://github.com/bkeepers/dotenv) at the root of your application. In this file you'll need to
 
 * CASSANDRA_URL: Optional, if you C* db (cluster) is not collocated with your Rails app
 * GEOCODER_API_KEY: A geocoding service provider API key to be used by GeoCoder
+
+
 
 
 
