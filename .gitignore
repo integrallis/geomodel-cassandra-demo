@@ -34,3 +34,7 @@ pickle-email-*.html
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore Mac Artifacts
+.DS_Store
+db/.DS_Store
