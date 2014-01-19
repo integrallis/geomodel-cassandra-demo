@@ -105,6 +105,7 @@ $ foreman start
 Add a .env (https://github.com/bkeepers/dotenv) at the root of your application. In this file you'll need to
 
 * CASSANDRA_URL: Optional, if you C* db (cluster) is not collocated with your Rails app
+* GEOCODER_PROVIDER: The geocoder service provider see https://github.com/alexreisner/geocoder#geocoding-service-lookup-configuration
 * GEOCODER_API_KEY: A geocoding service provider API key to be used by GeoCoder
 
 ### Cassandra Migrations and Heroku
