@@ -18,6 +18,9 @@ if ENV['seed_states']
   states = ENV['seed_states'].split(',').map(&:upcase)
 end
 
+id_min = ENV['id_min']
+id_max = ENV['id_max']
+
 puts "FILES ==> #{files}, STATES ==> #{states}"
 
 files.each do |file|
@@ -58,7 +61,7 @@ files.each do |file|
     
     puts "#{index} :: Processing school #{school_id}, #{name} in #{state}"
     
-    if states.empty? || states.include?(state)
+    if (states.empty? || states.include?(state)) && (id_min.nil? || school_id > id_min) && (id_max.nil? || school_id < id_max)
       School.create({
         school_id: school_id,
         name: name,

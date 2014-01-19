@@ -13,7 +13,13 @@ class School < Hashie::Mash
   end
 
   def geocode_address
-    geocoder_results = Geocoder.search(full_address)
+    
+      geocoder_results = begin
+        Geocoder.search(full_address)
+      rescue => e
+        puts "Exception Geocoding #{full_address}: #{e}"
+        []
+      end
     
     unless geocoder_results.empty?
       geo_location = geocoder_results.first
