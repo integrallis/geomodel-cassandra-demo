@@ -99,7 +99,6 @@ $ cd specx/ # prompted by RVM
 $ bundle
 $ rake db:migrate db:test:prepare
 $ rake cassandra:setup cassandra:migrate cassandra:test:prepare
-$ rspec spec
 $ foreman start
 ```
 
@@ -108,6 +107,42 @@ Add a .env (https://github.com/bkeepers/dotenv) at the root of your application.
 * CASSANDRA_URL: Optional, if you C* db (cluster) is not collocated with your Rails app
 * GEOCODER_API_KEY: A geocoding service provider API key to be used by GeoCoder
 
+### Cassandra Migrations and Heroku
+
+The config/cassandra.yml file includes an ERB snippet to include the production Cassandra cluster URL. 
+
+```ruby
+production:
+  host: <%= ENV['CASSANDRA_URL'] || '127.0.0.1' %>
+  port: 9042
+  keyspace: 'schools'
+  replication:
+    class: 'SimpleStrategy'
+    replication_factor: 1
+```
+
+Since environment apps are no available during Heroku's Slug Compilation process we need to add the *user-env-compile* Heroku Labs
+feature (https://devcenter.heroku.com/articles/labs-user-env-compile) that enable an app’s config vars present during the build. 
+To do so use the heroku command on your application as shown next (replace geomodel with the name of your application):
+
+```shell
++ heroku labs:enable user-env-compile -a geomodel
+
+Enabling user-env-compile for geomodel... done
+WARNING: This feature is experimental and may change or be removed without notice.
+For more information see: http://devcenter.heroku.com/articles/labs-user-env-compile
+```
+
+### Seeding the Database
+
+The rake db:seed command can take two optional parameters, the list of states to process from the seed files (as a comma delimited list) and
+the seed_file to be processed (first, second or last). I've done this so that you can stage the loading of seed data into multiple stages.
+
+The seeds files have the suffixes 'ai', 'kn' and 'ow' for the letters of the states they encompass.
+
+```shell
+rake db:seed seed_states=wy seed_file=last
+```
 
 
 

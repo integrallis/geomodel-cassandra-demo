@@ -2,9 +2,25 @@ require 'csv'
 require 'hashie'
 
 index = 0
-['sc091aai'
-  #, 'sc091akn', 'sc091aow'
-  ].each do |file|
+seeds = { :first => 'sc091aai', :second => 'sc091akn', :last => 'sc091aow' }
+
+puts "Seeding Schools with #{ENV['seed_file'] || 'all'} files and processing #{ENV['seed_states'] || 'all'} states"
+
+files = []
+if ENV['seed_file'].nil?
+  files = seeds.values
+else
+  files = seeds.keep_if { |k,v| k == ENV['seed_file'].to_sym }.values
+end
+
+states = []
+if ENV['seed_states']
+  states = ENV['seed_states'].split(',').map(&:upcase)
+end
+
+puts "FILES ==> #{files}, STATES ==> #{states}"
+
+files.each do |file|
   csv_fname = Rails.root.join("db/seeds/sc091a_csv/#{file}.csv")
   File.open(csv_fname).each_line do |raw_line|
     line = CSV.parse_line(raw_line, {col_sep: ","})
@@ -40,9 +56,9 @@ index = 0
     # status09
     school_status = line[14]
     
-    puts "#{index} :: Processing school #{school_id}, #{name}"
+    puts "#{index} :: Processing school #{school_id}, #{name} in #{state}"
     
-    if state == 'AZ'
+    if states.empty? || states.include?(state)
       School.create({
         school_id: school_id,
         name: name,
