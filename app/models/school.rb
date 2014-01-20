@@ -14,12 +14,14 @@ class School < Hashie::Mash
 
   def geocode_address
     
-      geocoder_results = begin
-        Geocoder.search(full_address)
-      rescue => e
-        puts "Exception Geocoding #{full_address}: #{e}"
-        []
-      end
+    geocoder_results = begin
+      Geocoder.search(full_address)
+    rescue => e
+      puts "Exception Geocoding #{full_address}: #{e}"
+      []
+    end
+    
+    puts "Geocoder Results ==> #{geocoder_results}"
     
     unless geocoder_results.empty?
       geo_location = geocoder_results.first
@@ -33,7 +35,7 @@ class School < Hashie::Mash
     else
       self.geocoded = false
       #errors.add(:address, "Could not Geocode address") 
-      puts "Could not geocode address"
+      puts "Could not geocode address: #{full_address}"
     end
   end
   
@@ -90,7 +92,8 @@ class School < Hashie::Mash
   end
   
   def save
-    CassandraMigrations::Cassandra.write!(:schools, self.to_hash)
+    values = self.to_hash.inject({}) { |h, (k, v)| h[k] = (String === v ? v.gsub("'", "''") : v); h } # escape single quotes
+    CassandraMigrations::Cassandra.write!(:schools, values)
     true
   end
   
