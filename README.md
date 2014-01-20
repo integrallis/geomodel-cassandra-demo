@@ -134,6 +134,12 @@ WARNING: This feature is experimental and may change or be removed without notic
 For more information see: http://devcenter.heroku.com/articles/labs-user-env-compile
 ```
 
+Then, add the required variables to your Heroku application using:
+
+```shell
+heroku config:set CASSANDRA_URL=127.0.0.1
+```
+
 ### Seeding the Database
 
 The rake db:seed command can take two optional parameters, the list of states to process from the seed files (as a comma delimited list) and
