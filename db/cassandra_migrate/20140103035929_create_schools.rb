@@ -27,6 +27,7 @@ class CreateSchools < CassandraMigrations::Migration
     create_index :schools, :state, :name => 'by_state'
     create_index :schools, :zipcode, :name => 'by_zipcode'
     create_index :schools, :school_id, :name => 'by_school_id'
+    create_index :schools, :geocoded, :name => 'by_geocoded'
   end
   
   def down
@@ -34,6 +35,7 @@ class CreateSchools < CassandraMigrations::Migration
     drop_index 'by_state'
     drop_index 'by_city'
     drop_index 'by_school_id'
+    drop_index 'by_geocoded'
     
     drop_table :schools
   end
