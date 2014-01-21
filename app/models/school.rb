@@ -134,19 +134,44 @@ class School < Hashie::Mash
   #
   def self.find_schools_near(latitude, longitude, max_results, radius)
     query_runner = lambda do |geocells|
-      school_ids = CassandraMigrations::Cassandra.select(
-        :geocells, 
-        :projection => 'schools',
-        :selection => "geocell IN ('#{geocells.uniq.join("', '")}')"
-      ).to_a.map { |r| r["schools"].map(&:to_s) }.flatten.uniq
       
-      unless school_ids.empty?
-        CassandraMigrations::Cassandra.select(
-          :schools,
-          :selection => "id IN (#{school_ids.to_a.uniq.map(&:to_s).join(",")})"
-        ).map { |attributes| School.new(attributes) }
+      school_ids = []
+      if geocells.first.size < 4
+        signature = geocells.uniq.join("', '")
+        school_ids = Rails.cache.fetch("geocells_#{signature}", :expires_in => 6.hours) do
+          CassandraMigrations::Cassandra.select(
+            :geocells, 
+            :projection => 'schools',
+            :selection => "geocell IN ('#{geocells.uniq.join("', '")}')"
+          ).to_a.map { |r| r["schools"].map(&:to_s) }.flatten.uniq
+        end
+        
+        unless school_ids.empty?
+          schools_raw = Rails.cache.fetch("schools_for_#{signature}", :expires_in => 6.hours) do
+            CassandraMigrations::Cassandra.select(
+              :schools,
+              :selection => "id IN (#{school_ids.to_a.uniq.map(&:to_s).join(",")})"
+            )
+          end
+          schools_raw.map { |attributes| School.new(attributes) }
+        else
+          []
+        end
       else
-        []
+        school_ids = CassandraMigrations::Cassandra.select(
+          :geocells, 
+          :projection => 'schools',
+          :selection => "geocell IN ('#{geocells.uniq.join("', '")}')"
+        ).to_a.map { |r| r["schools"].map(&:to_s) }.flatten.uniq     
+        
+        unless school_ids.empty?
+          CassandraMigrations::Cassandra.select(
+            :schools,
+            :selection => "id IN (#{school_ids.to_a.uniq.map(&:to_s).join(",")})"
+          ).map { |attributes| School.new(attributes) }
+        else
+          []
+        end   
       end
     end
     

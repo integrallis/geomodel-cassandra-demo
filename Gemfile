@@ -34,6 +34,8 @@ gem 'geomodel', '~> 0.0.3'
 gem 'rails-observers'
 gem 'gmaps4rails', '~> 2.1.1'
 gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'memcachier', '~> 0.0.2'
+gem 'dalli', '~> 2.7.0'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
