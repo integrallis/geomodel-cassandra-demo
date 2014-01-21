@@ -137,13 +137,13 @@ class School < Hashie::Mash
       school_ids = CassandraMigrations::Cassandra.select(
         :geocells, 
         :projection => 'schools',
-        :selection => "geocell IN ('#{geocells.join("', '")}')"
+        :selection => "geocell IN ('#{geocells.uniq.join("', '")}')"
       ).to_a.map { |r| r["schools"].map(&:to_s) }.flatten.uniq
       
       unless school_ids.empty?
         CassandraMigrations::Cassandra.select(
           :schools,
-          :selection => "id IN (#{school_ids.to_a.map(&:to_s).join(",")})"
+          :selection => "id IN (#{school_ids.to_a.uniq.map(&:to_s).join(",")})"
         ).map { |attributes| School.new(attributes) }
       else
         []
